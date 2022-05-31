@@ -1,19 +1,16 @@
-import {Request, Response} from "express"
-import userDeleteService from "../../services/user/userDelete.service"
+import { Request, Response } from "express";
+import { AppError, handleError } from "../../errors/appError";
+import userDeleteService from "../../services/user/userDelete.service";
 
 const userDeleteController = async (req: Request, res: Response) => {
-    try{
-
-        const email = req.userEmail
-        const user = await userDeleteService(email)
-        return res.status(200).json({message: "User deleted with sucess"})
-    }catch(err){
-        if(err instanceof Error){
-            return res.status(401).send({
-                error: err.name,
-                message: err.message
-            })
-        }
+  try {
+    const email = req.userEmail;
+    const user = await userDeleteService(email);
+    return res.status(200).json({ message: "User deleted with sucess" });
+  } catch (err) {
+    if (err instanceof AppError) {
+      handleError(err, res);
     }
-}
-export default userDeleteController
+  }
+};
+export default userDeleteController;
