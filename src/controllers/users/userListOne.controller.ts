@@ -3,7 +3,8 @@ import userListOneService from "../../services/user/userListOne.service"
 
 const userListOneController = async (req: Request, res: Response) => {
 try{
-    const user = await  userListOneService({authorization: req.headers.authorization})
+    const email = req.userEmail
+    const user = await userListOneService(email)
     return res.status(201).send(user)
 }
 catch(err){
