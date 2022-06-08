@@ -13,6 +13,7 @@ const userUpdateController = async (req: Request, res: Response) => {
     }
 
     const user = await userUpdateService(email, password);
+    
     return res.status(201).json({ message: "password update!" });
   } catch (err) {
     if (err instanceof AppError) {
